@@ -1,12 +1,12 @@
 {
   "uuid": "deb49414-ac81-4e0e-a1db-9e29cac17f22",
   "shortName": "waterface",
-  "longName": "waterface",
-  "companyName": "MakeAwesomeHappen",
+  "longName": "Pebble Waterface",
+  "companyName": "Villem",
   "versionCode": 1,
   "versionLabel": "1.0",
   "watchapp": {
-    "watchface": false
+    "watchface": true
   },
   "appKeys": {
     "dummy": 0
