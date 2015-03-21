@@ -1,17 +1,17 @@
 {
-  "uuid": "deb49414-ac81-4e0e-a1db-9e29cac17f22",
-  "shortName": "waterface",
-  "longName": "Pebble Waterface",
-  "companyName": "Villem",
-  "versionCode": 1,
-  "versionLabel": "1.0",
-  "watchapp": {
-    "watchface": true
-  },
-  "appKeys": {
-    "dummy": 0
-  },
-  "resources": {
-    "media": []
-  }
+    "uuid": "deb49414-ac81-4e0e-a1db-9e29cac17f22",
+    "shortName": "waterface",
+    "longName": "Pebble Waterface",
+    "companyName": "Villem",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    },
+    "appKeys": {
+        "dummy": 0
+    },
+    "resources": {
+        "media": []
+    }
 }

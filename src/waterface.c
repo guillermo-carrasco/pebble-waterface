@@ -1,60 +1,54 @@
 #include <pebble.h>
 
-static Window *window;
-static TextLayer *text_layer;
+static Window *s_main_window;
+static TextLayer *s_time_layer;
 
-static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Select");
+
+static void main_window_load(Window *window) {
+    // Create time TextLayer
+    s_time_layer = text_layer_create(GRect(0, 55, 144, 50));
+    text_layer_set_background_color(s_time_layer, GColorClear);
+    text_layer_set_text_color(s_time_layer, GColorBlack);
+    text_layer_set_text(s_time_layer, "Tja tja Guillem! ^^");
+
+    // Improve the layout to be more like a watchface
+    text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+    text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
+
+    // Add it as a child layer to the Window's root layer
+    layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
 }
 
-static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Up");
+
+static void main_window_unload(Window *window) {
+    // Destroy TextLayer
+    text_layer_destroy(s_time_layer);
 }
 
-static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Down");
+
+static void init() {
+    // Create main Window element and assign to pointer
+    s_main_window = window_create();
+
+    // Set handlers to manage the elements inside the Window
+    window_set_window_handlers(s_main_window, (WindowHandlers) {
+    .load = main_window_load,
+    .unload = main_window_unload
+    });
+
+    // Show the Window on the watch, with animated=true
+    window_stack_push(s_main_window, true);
 }
 
-static void click_config_provider(void *context) {
-  window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
-  window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
-  window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
+
+static void deinit() {
+    // Destroy Window
+    window_destroy(s_main_window);
 }
 
-static void window_load(Window *window) {
-  Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
-
-  text_layer = text_layer_create((GRect) { .origin = { 0, 72 }, .size = { bounds.size.w, 20 } });
-  text_layer_set_text(text_layer, "Press a button");
-  text_layer_set_text_alignment(text_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(text_layer));
-}
-
-static void window_unload(Window *window) {
-  text_layer_destroy(text_layer);
-}
-
-static void init(void) {
-  window = window_create();
-  window_set_click_config_provider(window, click_config_provider);
-  window_set_window_handlers(window, (WindowHandlers) {
-    .load = window_load,
-    .unload = window_unload,
-  });
-  const bool animated = true;
-  window_stack_push(window, animated);
-}
-
-static void deinit(void) {
-  window_destroy(window);
-}
 
 int main(void) {
-  init();
-
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Done initializing, pushed window: %p", window);
-
-  app_event_loop();
-  deinit();
+    init();
+    app_event_loop();
+    deinit();
 }
