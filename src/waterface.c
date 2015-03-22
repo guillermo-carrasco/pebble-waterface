@@ -71,6 +71,7 @@ static void main_window_unload(Window *window) {
     // Destroy TextLayer
     text_layer_destroy(s_time_layer);
     text_layer_destroy(s_weather_layer);
+    text_layer_destroy(s_location_layer);
 
     // Unload custom fonts
     fonts_unload_custom_font(s_time_font);
