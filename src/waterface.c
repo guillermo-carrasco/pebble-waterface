@@ -46,7 +46,7 @@ static void main_window_load(Window *window) {
 
     // Apply to Time TextLayer
     text_layer_set_font(s_time_layer, s_time_font);
-    text_layer_set_text_alignment(s_time_layer, GAlignCenter);
+    text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
 
     // Apply to Weather TextLayer
