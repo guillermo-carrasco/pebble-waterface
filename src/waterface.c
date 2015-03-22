@@ -9,6 +9,7 @@ static Window *s_main_window;
 
 static TextLayer *s_time_layer;
 static TextLayer *s_weather_layer;
+static TextLayer *s_location_layer;
 
 static GFont s_time_font;
 static GFont s_weather_font;
@@ -34,11 +35,18 @@ static void main_window_load(Window *window) {
     text_layer_set_text_color(s_time_layer, GColorBlack);
 
     // Create temperature Layer
-    s_weather_layer = text_layer_create(GRect(0, 130, 144, 25));
+    s_weather_layer = text_layer_create(GRect(0, 120, 144, 25));
     text_layer_set_background_color(s_weather_layer, GColorClear);
     text_layer_set_text_color(s_weather_layer, GColorWhite);
     text_layer_set_text_alignment(s_weather_layer, GTextAlignmentCenter);
-    text_layer_set_text(s_weather_layer, "Loading...");
+    text_layer_set_text(s_weather_layer, "Loading weather...");
+
+    // Create location Layer
+    s_location_layer = text_layer_create(GRect(0, 146, 144, 25));
+    text_layer_set_background_color(s_location_layer, GColorClear);
+    text_layer_set_text_color(s_location_layer, GColorWhite);
+    text_layer_set_text_alignment(s_location_layer, GTextAlignmentCenter);
+    text_layer_set_text(s_location_layer, "Locating...");
 
     // Create GFonts
     s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_PERFECT_DOS_48));
@@ -52,6 +60,10 @@ static void main_window_load(Window *window) {
     // Apply to Weather TextLayer
     text_layer_set_font(s_weather_layer, s_weather_font);
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_weather_layer));
+
+    // Apply to Locatiom TextLayer
+    text_layer_set_font(s_location_layer, s_weather_font);
+    layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_location_layer));
 }
 
 
