@@ -31,21 +31,21 @@ static void main_window_load(Window *window) {
     layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_background_layer));
 
     // Create time TextLayer
-    s_time_layer = text_layer_create(GRect(5, 52, 144, 50));
+    s_time_layer = text_layer_create(GRect(0, 0, 144, 50));
     text_layer_set_background_color(s_time_layer, GColorClear);
-    text_layer_set_text_color(s_time_layer, GColorBlack);
+    text_layer_set_text_color(s_time_layer, GColorWhite);
 
     // Create temperature Layer
-    s_weather_layer = text_layer_create(GRect(0, 120, 144, 25));
+    s_weather_layer = text_layer_create(GRect(0, 50, 144, 25));
     text_layer_set_background_color(s_weather_layer, GColorClear);
-    text_layer_set_text_color(s_weather_layer, GColorWhite);
+    text_layer_set_text_color(s_weather_layer, GColorBlack);
     text_layer_set_text_alignment(s_weather_layer, GTextAlignmentCenter);
     text_layer_set_text(s_weather_layer, "Loading weather...");
 
     // Create location Layer
-    s_location_layer = text_layer_create(GRect(0, 146, 144, 25));
+    s_location_layer = text_layer_create(GRect(0, 75, 144, 25));
     text_layer_set_background_color(s_location_layer, GColorClear);
-    text_layer_set_text_color(s_location_layer, GColorWhite);
+    text_layer_set_text_color(s_location_layer, GColorBlack);
     text_layer_set_text_alignment(s_location_layer, GTextAlignmentCenter);
     text_layer_set_text(s_location_layer, "Locating...");
 
