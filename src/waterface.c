@@ -133,7 +133,6 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // Store incoming information
     static char temperature_buffer[8];
     static char conditions_buffer[32];
-    static char location_buffer[32];
     static char weather_layer_buffer[32];
     static char location_layer_buffer[32];
 
@@ -151,7 +150,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
                 snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", t->value->cstring);
                 break;
             case KEY_LOCATION:
-                snprintf(location_buffer, sizeof(location_buffer), "%s", t->value->cstring);
+                snprintf(location_layer_buffer, sizeof(location_layer_buffer), "%s", t->value->cstring);
                 break;
             default:
                 APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
@@ -164,7 +163,6 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // Assemble full string and display
     snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s", temperature_buffer, conditions_buffer);
     text_layer_set_text(s_weather_layer, weather_layer_buffer);
-    snprintf(location_layer_buffer, sizeof(location_layer_buffer), "%s", location_buffer);
     text_layer_set_text(s_location_layer, location_layer_buffer);
 }
 

@@ -30,7 +30,7 @@ function locationSuccess(pos) {
 
 	  // Location
 	  var location = json.name;
-	  console.log("Location is " + loaction);
+	  console.log("Location is " + location);
 
       // Assemble dictionary using our keys
       var dictionary = {
