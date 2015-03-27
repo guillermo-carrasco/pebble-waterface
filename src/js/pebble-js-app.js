@@ -28,10 +28,15 @@ function locationSuccess(pos) {
       var conditions = json.weather[0].main;
       console.log("Conditions are " + conditions);
 
+	  // Location
+	  var location = json.name;
+	  console.log("Location is " + loaction);
+
       // Assemble dictionary using our keys
       var dictionary = {
         "KEY_TEMPERATURE": temperature,
-        "KEY_CONDITIONS": conditions
+        "KEY_CONDITIONS": conditions,
+		"KEY_LOCATION": location
       };
 
       // Send to Pebble
