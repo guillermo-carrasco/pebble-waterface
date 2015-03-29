@@ -1,4 +1,5 @@
 #include <pebble.h>
+#include "waterdrops.h"
 
 enum {
     KEY_TEMPERATURE = 0,

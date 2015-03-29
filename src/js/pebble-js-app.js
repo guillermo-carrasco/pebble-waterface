@@ -67,7 +67,7 @@ function getWeather() {
 // Listen for when the watchface is opened
 Pebble.addEventListener('ready',
   function(e) {
-    console.log("PebbleKit JS ready!");
+    console.log("Waterface opened!");
 
     // Get the initial weather
     getWeather();
