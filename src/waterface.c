@@ -11,7 +11,6 @@ static Window *s_main_window;
 
 static TextLayer *s_time_layer;
 static TextLayer *s_weather_layer;
-static TextLayer *s_location_layer;
 
 static GFont s_time_font;
 static GFont s_weather_font;
@@ -37,18 +36,11 @@ static void main_window_load(Window *window) {
     text_layer_set_text_color(s_time_layer, GColorWhite);
 
     // Create temperature Layer
-    s_weather_layer = text_layer_create(GRect(0, 50, 144, 25));
+    s_weather_layer = text_layer_create(GRect(0, 50, 144, 50));
     text_layer_set_background_color(s_weather_layer, GColorClear);
     text_layer_set_text_color(s_weather_layer, GColorBlack);
     text_layer_set_text_alignment(s_weather_layer, GTextAlignmentCenter);
-    text_layer_set_text(s_weather_layer, "Loading weather...");
-
-    // Create location Layer
-    s_location_layer = text_layer_create(GRect(0, 75, 144, 25));
-    text_layer_set_background_color(s_location_layer, GColorClear);
-    text_layer_set_text_color(s_location_layer, GColorBlack);
-    text_layer_set_text_alignment(s_location_layer, GTextAlignmentCenter);
-    text_layer_set_text(s_location_layer, "Locating...");
+    text_layer_set_text(s_weather_layer, "Loading weather...\n");
 
     // Create GFonts
     s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_PERFECT_DOS_48));
@@ -62,10 +54,6 @@ static void main_window_load(Window *window) {
     // Apply to Weather TextLayer
     text_layer_set_font(s_weather_layer, s_weather_font);
     layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_weather_layer));
-
-    // Apply to Locatiom TextLayer
-    text_layer_set_font(s_location_layer, s_weather_font);
-    layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_location_layer));
 }
 
 
@@ -73,7 +61,6 @@ static void main_window_unload(Window *window) {
     // Destroy TextLayer
     text_layer_destroy(s_time_layer);
     text_layer_destroy(s_weather_layer);
-    text_layer_destroy(s_location_layer);
 
     // Unload custom fonts
     fonts_unload_custom_font(s_time_font);
@@ -134,8 +121,8 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // Store incoming information
     static char temperature_buffer[8];
     static char conditions_buffer[32];
+    static char location_buffer[32];
     static char weather_layer_buffer[32];
-    static char location_layer_buffer[32];
 
     // Read first item
     Tuple *t = dict_read_first(iterator);
@@ -151,7 +138,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
                 snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", t->value->cstring);
                 break;
             case KEY_LOCATION:
-                snprintf(location_layer_buffer, sizeof(location_layer_buffer), "%s", t->value->cstring);
+                snprintf(location_buffer, sizeof(location_buffer), "%s", t->value->cstring);
                 break;
             default:
                 APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
@@ -162,9 +149,8 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     }
 
     // Assemble full string and display
-    snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s", temperature_buffer, conditions_buffer);
+    snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s\n%s", temperature_buffer, conditions_buffer, location_buffer);
     text_layer_set_text(s_weather_layer, weather_layer_buffer);
-    text_layer_set_text(s_location_layer, location_layer_buffer);
 }
 
 
